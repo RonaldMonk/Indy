@@ -1,0 +1,50 @@
+body {
+  background-color: azure;
+}
+table {
+  border-collapse: collapse;
+}
+td, th {
+  padding: 5px 20px;
+  border-left: 1px solid blue;
+}
+td {
+  color: blue;
+  text-align: right;
+}
+tr :first-child {
+  border-left:none;
+  text-align: left;
+}
+th {
+  border-bottom: 1px solid blue;
+}
+p {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: larger;
+}
+p::first-letter {
+  font-size:x-large;
+}
+button {
+  padding: 5px 10px;
+  background-color: aqua;
+  border-radius: 8px;
+  cursor: pointer;
+}
+div {
+  float: left;
+  margin-right: 20px;
+}
+#dhondt-round {
+  width: 250px;
+}
+#current-region {
+  width: 300px;
+}
+#current-dataset {
+  width: 300px;
+}
+#newline {
+  clear:left;
+}

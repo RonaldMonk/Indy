@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>D'Hondt proportional voting</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <h1>The D'Hondt voting system as used in Scotland</h1>
+  <p>
+    In Scotland there are eight voting regions. In each region there are between eight and ten constituencies.
+  </p>
+  <p>
+    Voting takes the form of two votes. The first is a First Past the Post constituency vote and is carried out independently in each
+    of the eight regions.
+  </p>
+  <p>
+    The total number of constituencies across all the regions is 73. There are an additional 56 regional list 'seats' that are allocated in the
+    second vote giving a total of 129 seats. Due to the allocation of these additional members to parliament as will be described below,
+    it is very difficult to achieve an overall majority.
+  </p>
+  <p>
+    The D'Hondt proportional voting system is based on a number of voting 'rounds' whereby each party is awarded additional parliamental members.
+    Prior to this, the First Past the Post constituency votes are counted, and 
+    in each round, each party's votes are biased by being divided by the number of seats already won plus one.
+    This addition of one is done because otherwise division by zero would occur where a party has not won any seats.
+  </p>
+  <p>This process is repeated for each round until all the seats have been allocated. After each round, the party winning on that round has it's
+    divisor incremented. Thus the party with the most votes does not necessarily get the most seats, especially if it has done well in the
+    preceding constituency vote. In this case such a party would be at a disadvantage as it's starting divisor would be high.
+  </p>
+  <p>
+    The eight regions each have an additional seven 'seats' available to allocate, so there are seven D'Hondt rounds.
+  </p>
+  <p>
+    Sound complicated? Maybe not, but it is confusing to voters who don't know how it works. Many voters, spurred on by the leading independence-supporting
+    party, the Scottish National Party (SNP), waste their list vote by giving it to them. If the SNP do very well in the constituency vote,
+    it's very likely that they may not get any regional list seats because of the constituency seats they have already won. It would have been better
+    to give the second vote to a different independence-supporting party that they could go into a coalition with.
+    The following might be helpful in explaining how the D'Hondt part works.
+  </p>
+  <br>
+  <h2>Constituency seat results 2021</h2>
+  <table id="const-seats"></table>
+  <br>
+  <h2>Regional list results 2021</h2>
+  <table id="list-seats"></table>
+  <br>
+  <h2>A demonstration of the D'Hondt voting system</h2>
+  <table>
+    <tr id="table3-headings"></tr>
+    <tr id="const-won"></tr>
+    <tr id="list-won"></tr>
+    <tr id="votes-cast"></tr>
+    <tr id="round1"></tr>
+    <tr id="round2"></tr>
+    <tr id="round3"></tr>
+    <tr id="round4"></tr>
+    <tr id="round5"></tr>
+    <tr id="round6"></tr>
+    <tr id="round7"></tr>
+  </table>
+  <br><br>
+  <div id="dhondt-round">D'Hondt round: <button type="button" id="round-btn"></button></div>
+  <div id="current-region">Current region: <button type="button" id="region"></button></div>
+  <div id="current-dataset">Current data: <button type="button" id="dataset"></button></div></div><br>
+  <p id="newline">The alternative data is a scenario where the SNP voters would have given their regional list vote to the Alba and Green parties and assuming
+  the split would be about 50/50</p>
+</body>
+</html>
