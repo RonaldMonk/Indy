@@ -3,27 +3,27 @@ const constituencyAndList = [ // Array for each region
   {
     region: "Central Scotland",
     constSeats: [9, 0, 0, 0, 0, 0], //Constituency seats won by each party in the order SNP, Alba, Green, Labour, Conservative and Liberal democrats
-    listVotes: [148399, 5345, 19512, 77623, 59896, 6337] //regional list votes in the same order as constituency seats
+    listVotes: [148399, 5118, 19512, 77623, 59896, 6337] //regional list votes in the same order as constituency seats
   },
   {
     region: "Glasgow",
     constSeats: [9, 0, 0, 0, 0, 0],
-    listVotes: [133917, 7820, 36114, 74088, 37027, 6079]
+    listVotes: [133917, 4398, 36114, 74088, 37027, 6079]
   },
   {
     region: "Highlands and Islands",
     constSeats: [6, 0, 0, 0, 0, 2],
-    listVotes: [96433, 3828, 17729, 22713, 60779, 26771]
+    listVotes: [96433, 6964, 17729, 22713, 60779, 26771]
   },
   {
     region: "Lothian",
     constSeats: [7, 0, 0, 1, 0, 1],
-    listVotes: [141478, 14973, 49984, 76689, 78595, 28433]
+    listVotes: [141478, 8269, 49984, 76689, 78595, 28433]
   },
   {
     region: "Mid Scotland and Fife",
     constSeats: [8, 0, 0, 0, 0, 1],
-    listVotes: [136825, 7064, 28654, 52626, 85909, 25489]
+    listVotes: [136825, 6660, 28654, 52626, 85909, 25489]
   },
   {
     region: "North East Scotland",
@@ -33,12 +33,12 @@ const constituencyAndList = [ // Array for each region
   {
     region: "South Scotland",
     constSeats: [6, 0, 0, 0, 3, 0],
-    listVotes: [136741, 8572, 18964, 57236, 121730, 12422]
+    listVotes: [136741, 5580, 18964, 57236, 121730, 12422]
   },
   {
     region: "West Scotland",
     constSeats: [8, 0, 0, 1, 1, 0],
-    listVotes: [152671, 10914, 26632, 83782, 82640, 13570]
+    listVotes: [152671, 6964, 26632, 83782, 82640, 13570]
   }
 ];
 const parties = ["SNP", "Alba", "Green", "Labour", "Cons", "Libdem"];
