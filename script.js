@@ -75,7 +75,7 @@ const listSeatsWon = [0, 0, 0, 0, 0, 0];
 const line3Desc = "List seats won";
 let currentRound = [0, 0, 0, 0, 0, 0, 0, 0];
 let currentRegion = 0;
-let currentDataset = 1;
+let currentDataset = -1;
 changeDataset();
 
 function dHondtReset() { // beginning and reset position of variables to be displayed and controlling variables (which round we're on)
@@ -163,18 +163,35 @@ function changeRegion() {
 
 function changeDataset() {
   let temp;
-  currentDataset = (currentDataset+1) % 2;
+  currentDataset = (currentDataset+1) % 4;
   for (regionInx = 0; regionInx < constituencyAndList.length; regionInx++) { // for each region..
     for (partyInx = 0; partyInx < parties.length; partyInx++) { // and each party's vote
       workingListVotes[regionInx][partyInx] = constituencyAndList[regionInx].listVotes[partyInx]; // copy list votes to an array that can be safely altered
     }
-    if (currentDataset === 1) { // i.e. the 50/50 scenario where SNP votes are shared out between Alba and Green parties
-      temp = workingListVotes[regionInx][0]/2; // divide SNP by 2 and save for later
-      workingListVotes[regionInx][0] = 0; // SNP votes to zero. They will be shared out evenly and given to..
-      workingListVotes[regionInx][1] += Math.floor(temp); // the Alba pro-independence party..
-      workingListVotes[regionInx][2] += Math.ceil(temp); // and the Greens who are also pro-indy
-      document.getElementById("dataset").innerHTML = "SNP -> Alba/Green 50/50" // change the text for the data set button
-    } else document.getElementById("dataset").innerHTML = "2021 results";
+    switch (currentDataset) {
+      case 0:
+        document.getElementById("dataset").innerHTML = "2021 results";
+        break;
+      case 1:
+        temp = workingListVotes[regionInx][0]/2; // divide SNP by 2 and save for later
+        workingListVotes[regionInx][0] = 0; // SNP votes to zero. They will be shared out evenly and given to..
+        workingListVotes[regionInx][1] += Math.floor(temp); // the Alba pro-independence party..
+        workingListVotes[regionInx][2] += Math.ceil(temp); // and the Greens who are also pro-indy
+        document.getElementById("dataset").innerHTML = "SNP -> Alba/Green 50/50"; // change the text for the data set button
+        break;
+      case 2:
+        workingListVotes[regionInx][1] += workingListVotes[regionInx][0];
+        workingListVotes[regionInx][0] = 0;
+        document.getElementById("dataset").innerHTML = "SNP -> Alba";
+        break;
+      case 3:
+        workingListVotes[regionInx][2] += workingListVotes[regionInx][0];
+        workingListVotes[regionInx][0] = 0;
+        document.getElementById("dataset").innerHTML = "SNP -> Green";
+        break;
+      default:
+        document.getElementById("dataset").innerHTML = "Error in code";
+    }  
   }
   redisplayRounds();
 }
