@@ -3,27 +3,27 @@ const constituencyAndList = [ // Array for each region
   {
     region: "Central Scotland",
     constSeats: [9, 0, 0, 0, 0, 0], //Constituency seats won by each party in the order SNP, Alba, Green, Labour, Conservative and Liberal democrats
-    listVotes: [148399, 5118, 19512, 77623, 59896, 6337] //regional list votes in the same order as constituency seats
+    listVotes: [148399, 5345, 19512, 77623, 59896, 6337] //regional list votes in the same order as constituency seats
   },
   {
     region: "Glasgow",
     constSeats: [9, 0, 0, 0, 0, 0],
-    listVotes: [133917, 4398, 36114, 74088, 37027, 6079]
+    listVotes: [133917, 7820, 36114, 74088, 37027, 6079]
   },
   {
     region: "Highlands and Islands",
     constSeats: [6, 0, 0, 0, 0, 2],
-    listVotes: [96433, 6964, 17729, 22713, 60779, 26771]
+    listVotes: [96433, 3828, 17729, 22713, 60779, 26771]
   },
   {
     region: "Lothian",
     constSeats: [7, 0, 0, 1, 0, 1],
-    listVotes: [141478, 8269, 49984, 76689, 78595, 28433]
+    listVotes: [141478, 14973, 49984, 76689, 78595, 28433]
   },
   {
     region: "Mid Scotland and Fife",
     constSeats: [8, 0, 0, 0, 0, 1],
-    listVotes: [136825, 6660, 28654, 52626, 85909, 25489]
+    listVotes: [136825, 7064, 28654, 52626, 85909, 25489]
   },
   {
     region: "North East Scotland",
@@ -33,12 +33,12 @@ const constituencyAndList = [ // Array for each region
   {
     region: "South Scotland",
     constSeats: [6, 0, 0, 0, 3, 0],
-    listVotes: [136741, 5580, 18964, 57236, 121730, 12422]
+    listVotes: [136741, 8572, 18964, 57236, 121730, 12422]
   },
   {
     region: "West Scotland",
     constSeats: [8, 0, 0, 1, 1, 0],
-    listVotes: [152671, 6964, 26632, 83782, 82640, 13570]
+    listVotes: [152671, 10914, 26632, 83782, 82640, 13570]
   }
 ];
 const parties = ["SNP", "Alba", "Green", "Labour", "Cons", "Libdem"];
@@ -72,11 +72,12 @@ document.getElementById("list-seats").innerHTML = createVoteTable(constituencyAn
 // D'Hondt section=================================================================
 //===================================================================================
 const listSeatsWon = [0, 0, 0, 0, 0, 0];
-const line3Desc = "List seats won";
+const line3Desc = "List seats won so far";
 let currentRound = [0, 0, 0, 0, 0, 0, 0, 0];
-let currentRegion = 0;
+let currentRegion = -1;
+regionUp();
 let currentDataset = -1;
-changeDataset();
+changeDatasetUp();
 
 function dHondtReset() { // beginning and reset position of variables to be displayed and controlling variables (which round we're on)
   currentRound[currentRegion] = 0;
@@ -110,10 +111,15 @@ function dHondtReset() { // beginning and reset position of variables to be disp
 
 const dHondt = document.getElementById("round-btn"); // set up listener for Start/Next round/Restart button
 dHondt.addEventListener("click", nextDHondtRound);
-const regionSelect = document.getElementById("current-region"); // set up event listener for region button
-region.addEventListener("click", changeRegion);
-const datasetSelect = document.getElementById("dataset"); // event listener for data set button
-datasetSelect.addEventListener("click", changeDataset);
+const regionLeft = document.getElementById("region-left"); // set up event listener for region button
+regionLeft.addEventListener("click", regionDown);
+const regionRight = document.getElementById("region-right");
+regionRight.addEventListener("click", regionUp);
+const datasetLeft = document.getElementById("dataset-left"); // event listener for data set button
+datasetLeft.addEventListener("click", changeDatasetDown);
+const datasetRight = document.getElementById("dataset-right"); // event listener for data set button
+datasetRight.addEventListener("click", changeDatasetUp);
+
 dHondtReset();
 document.getElementById("region").innerHTML = constituencyAndList[currentRegion].region;
 
@@ -152,46 +158,57 @@ function nextDHondtRound() {
   }
 }
 
-function changeRegion() {
-  currentRegion++;
-  if (currentRegion > 7) {
-    currentRegion = 0;
-  }
-  document.getElementById("region").innerHTML = constituencyAndList[currentRegion].region; // change text for region button
-  redisplayRounds();
+function regionUp() {
+  currentRegion = (currentRegion + 1) % 8;
+  changeRegion();
 }
 
+function regionDown() {
+  currentRegion = (currentRegion + 7) % 8;
+  changeRegion();
+}
+function changeRegion() {
+  document.getElementById("current-region-text").innerHTML = `Current region: ${constituencyAndList[currentRegion].region}`; // change text for region button
+  redisplayRounds();
+}
+function changeDatasetDown() {
+  currentDataset = (currentDataset + 3) % 4;
+  changeDataset();
+}
+function changeDatasetUp() {
+  currentDataset = (currentDataset + 1) % 4;
+  changeDataset();
+}
 function changeDataset() {
   let temp;
-  currentDataset = (currentDataset+1) % 4;
-  for (regionInx = 0; regionInx < constituencyAndList.length; regionInx++) { // for each region..
-    for (partyInx = 0; partyInx < parties.length; partyInx++) { // and each party's vote
+  for (regionInx = 0; regionInx < constituencyAndList.length; regionInx++) {
+    for (partyInx = 0; partyInx < parties.length; partyInx++) {
       workingListVotes[regionInx][partyInx] = constituencyAndList[regionInx].listVotes[partyInx]; // copy list votes to an array that can be safely altered
     }
     switch (currentDataset) {
       case 0:
-        document.getElementById("dataset").innerHTML = "2021 results";
+        document.getElementById("current-dataset-text").innerHTML = "Dataset: 2021 results";
         break;
       case 1:
-        temp = workingListVotes[regionInx][0]/2; // divide SNP by 2 and save for later
-        workingListVotes[regionInx][0] = 0; // SNP votes to zero. They will be shared out evenly and given to..
-        workingListVotes[regionInx][1] += Math.floor(temp); // the Alba pro-independence party..
-        workingListVotes[regionInx][2] += Math.ceil(temp); // and the Greens who are also pro-indy
-        document.getElementById("dataset").innerHTML = "SNP -> Alba/Green 50/50"; // change the text for the data set button
+        temp = workingListVotes[regionInx][0]/2;
+        workingListVotes[regionInx][0] = 0;
+        workingListVotes[regionInx][1] += Math.floor(temp);
+        workingListVotes[regionInx][2] += Math.ceil(temp);
+        document.getElementById("current-dataset-text").innerHTML = "Dataset: SNP -> Alba/Green 50/50";
         break;
       case 2:
-        workingListVotes[regionInx][1] += workingListVotes[regionInx][0];
+        workingListVotes[regionInx][1]+= workingListVotes[regionInx][0];
         workingListVotes[regionInx][0] = 0;
-        document.getElementById("dataset").innerHTML = "SNP -> Alba";
+        document.getElementById("current-dataset-text").innerHTML = "Dataset: SNP -> Alba";
         break;
       case 3:
-        workingListVotes[regionInx][2] += workingListVotes[regionInx][0];
+        workingListVotes[regionInx][2]+= workingListVotes[regionInx][0];
         workingListVotes[regionInx][0] = 0;
-        document.getElementById("dataset").innerHTML = "SNP -> Green";
+        document.getElementById("current-dataset-text").innerHTML = "Dataset: SNP -> Green";
         break;
       default:
-        document.getElementById("dataset").innerHTML = "Error in code";
-    }  
+        document.getElementById("current-dataset-text").innerHTML = "Error in code";
+    }
   }
   redisplayRounds();
 }

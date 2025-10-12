@@ -1,5 +1,5 @@
 body {
-  background-color: azure;
+  background-color: azure
 }
 table {
   border-collapse: collapse;
@@ -33,18 +33,34 @@ button {
   cursor: pointer;
 }
 div {
-  float: left;
+  display:inline-block;
   margin-right: 20px;
 }
 #dhondt-round {
   width: 250px;
 }
 #current-region {
-  width: 300px;
+  width: 350px;
 }
 #current-dataset {
-  width: 300px;
+  width: 350px;
+}
+#dhondt-round, #current-region, #current-dataset {
+  border: 1px solid blue;
+  border-radius: 8px;
+  padding: 10px;
+}
+#current-dataset-text {
+  display:inline-block;
+  width:250px;
 }
 #alternative-data {
-  clear:left;
+  clear: left;
+}
+#current-region-text {
+  display:inline-block;
+  width: 250px;
+}
+#region-left, region-right {
+  display:inline;
 }
