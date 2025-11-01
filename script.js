@@ -121,7 +121,7 @@ const datasetRight = document.getElementById("dataset-right"); // event listener
 datasetRight.addEventListener("click", changeDatasetUp);
 
 dHondtReset();
-document.getElementById("region").innerHTML = constituencyAndList[currentRegion].region;
+//document.getElementById("region").innerHTML = constituencyAndList[currentRegion].region;
 
 function nextDHondtRound() {
   currentRound[currentRegion]++;
