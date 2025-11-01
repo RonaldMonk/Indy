@@ -73,7 +73,7 @@ document.getElementById("list-seats").innerHTML = createVoteTable(constituencyAn
 //===================================================================================
 const listSeatsWon = [0, 0, 0, 0, 0, 0];
 const line3Desc = "List seats won so far";
-let currentRound = [0, 0, 0, 0, 0, 0, 0, 0];
+let currentRound = [7, 7, 7, 7, 7, 7, 7, 7];
 let currentRegion = -1;
 regionUp();
 let currentDataset = -1;
@@ -120,7 +120,7 @@ datasetLeft.addEventListener("click", changeDatasetDown);
 const datasetRight = document.getElementById("dataset-right"); // event listener for data set button
 datasetRight.addEventListener("click", changeDatasetUp);
 
-dHondtReset();
+redisplayRounds();
 
 function nextDHondtRound() {
   currentRound[currentRegion]++;
